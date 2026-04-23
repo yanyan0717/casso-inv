@@ -186,7 +186,7 @@ export default function AddUser() {
 
     try {
       // Use secondaryAuth so we don't log out the admin
-      const currentAdminUid = auth.currentUser?.uid;
+      // const currentAdminUid = auth.currentUser?.uid; // Removed unused variable
       const userCredential = await createUserWithEmailAndPassword(secondaryAuth, formData.email, formData.password);
 
       const newUserId = userCredential.user.uid;

@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Search, Settings2, Trash, BookOpen, X, Save, Camera, Plus, ArrowUp, ArrowDown, ChevronsUpDown, Minus, FileDown, Palette, Ruler, Tag, Calendar, TrendingUp, TrendingDown, BarChart3, CheckCircle, AlertTriangle } from 'lucide-react';
+import { Search, Settings2, Trash, BookOpen, X, Save, Camera, Plus, ArrowUp, ArrowDown, ChevronsUpDown, Minus, FileDown, Palette, Ruler, Tag, Calendar, TrendingUp, TrendingDown, BarChart3, AlertTriangle } from 'lucide-react';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
-import { collection, query, orderBy, getDocs, doc, deleteDoc, addDoc, updateDoc, Timestamp } from 'firebase/firestore';
+import { collection, query, orderBy, getDocs, doc, deleteDoc, addDoc, updateDoc, where } from 'firebase/firestore';
 import { db, auth } from '../lib/firebase';
 import { showToast } from '../components/Toast';
 import { TableSkeleton } from '../components/SkeletonLoader';
@@ -556,7 +556,7 @@ export default function Materials() {
 
     setSaving(true);
     const user = auth.currentUser;
-    const oldMaterial = modalMode === 'edit' ? materials.find(m => m.id === formData.id) : null;
+    const _oldMaterial = modalMode === 'edit' ? materials.find(m => m.id === formData.id) : null;
     const newStock = parseInt(formData.stocks) || 0;
 
     const materialData: any = {

@@ -41,7 +41,7 @@ export default function Dashboard() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedStat, setSelectedStat] = useState<string | null>(null);
   const [generatingPDF, setGeneratingPDF] = useState(false);
-  const [generatingModalPDF, setGeneratingModalPDF] = useState(false);
+  // Removed unused generatingModalPDF and setGeneratingModalPDF
 
   const fetchData = async () => {
     try {
@@ -557,11 +557,11 @@ export default function Dashboard() {
                           </span>
                         </td>
                         <td className="px-6 py-3 text-slate-500 text-xs">{formatDate(mat.created_at)}</td>
-                      </tr>
+                       </tr>
                     );
                   })}
                 </tbody>
-              </table>
+               </table>
             </div>
           </div>
 
@@ -582,7 +582,7 @@ export default function Dashboard() {
                       <th className="px-6 py-3 text-[11px] font-bold text-[#166534] uppercase tracking-wider text-right">Quantity</th>
                       <th className="px-6 py-3 text-[11px] font-bold text-[#166534] uppercase tracking-wider">Reason</th>
                       <th className="px-6 py-3 text-[11px] font-bold text-[#166534] uppercase tracking-wider">Performed By</th>
-                    </tr>
+                     </tr>
                   </thead>
                   <tbody>
                     {recentLogs.map((log) => (
@@ -654,7 +654,7 @@ export default function Dashboard() {
                     <th className="px-6 py-3 text-[11px] font-bold text-[#166534] uppercase tracking-wider">Category</th>
                     <th className="px-6 py-3 text-[11px] font-bold text-[#166534] uppercase tracking-wider text-center">Stock</th>
                     <th className="px-6 py-3 text-[11px] font-bold text-[#166534] uppercase tracking-wider">Status</th>
-                  </tr>
+                   </tr>
                 </thead>
                 <tbody>
                   {getFilteredMaterials().map((mat, idx) => {

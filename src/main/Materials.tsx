@@ -556,7 +556,6 @@ export default function Materials() {
 
     setSaving(true);
     const user = auth.currentUser;
-    const _oldMaterial = modalMode === 'edit' ? materials.find(m => m.id === formData.id) : null;
     const newStock = parseInt(formData.stocks) || 0;
 
     const materialData: any = {

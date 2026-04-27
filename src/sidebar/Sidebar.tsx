@@ -95,6 +95,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
       icon: Package,
       subItems: [
         { name: 'Overview', path: '/materials' },
+        ...(roleLoaded && role === 'admin' ? [{ name: 'Requests List', path: '/materials/requests-list' }] : []),
       ]
     },
     {
@@ -102,7 +103,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
       path: '/storage-control',
       icon: ClipboardList,
       subItems: [
-        ...(roleLoaded && role === 'admin' ? [{ name: 'Orders History', path: '/storage-control/orders-history' }] : []),
+        ...(roleLoaded && role === 'admin' ? [{ name: 'Requests History', path: '/storage-control/requests-history' }] : []),
         { name: 'Material Logs', path: '/storage-control/logs' },
       ]
     },
@@ -179,7 +180,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
                       <NavLink
                         key={sub.name}
                         to={sub.path}
-                        end={sub.path === '/materials' || sub.path === '/storage-control/orders-history' || sub.path === '/storage-control/logs'}
+                        end={sub.path === '/materials' || sub.path === '/storage-control/requests-history' || sub.path === '/storage-control/logs'}
                         onClick={() => window.innerWidth < 768 && onClose()}
                         className={({ isActive }) =>
                           `px-3 py-2 rounded-lg text-[13px] font-medium transition-all duration-200 ${isActive

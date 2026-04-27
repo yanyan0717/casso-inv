@@ -25,12 +25,12 @@ interface RequestEntry {
   } | null;
 }
 
-interface OrdersListProps {
+interface RequestsListProps {
   showHistoryOnly?: boolean;
   showPendingOnly?: boolean;
 }
 
-export default function OrdersList({ showHistoryOnly = false, showPendingOnly = false }: OrdersListProps) {
+export default function RequestsList({ showHistoryOnly = false, showPendingOnly = false }: RequestsListProps) {
   const [requests, setRequests] = useState<RequestEntry[]>([]);
   const [loading, setLoading] = useState(true);
   const [processingId, setProcessingId] = useState<string | null>(null);
@@ -207,7 +207,7 @@ export default function OrdersList({ showHistoryOnly = false, showPendingOnly = 
 
     doc.setFontSize(11);
     doc.setTextColor(100, 100, 100);
-    const reportName = showHistoryOnly ? 'Orders History Report' : 'Orders List Report';
+    const reportName = showHistoryOnly ? 'Requests History Report' : 'Requests List Report';
     doc.text(`${reportName} - Generated on ${new Date().toLocaleDateString()}`, 14, 30);
 
     const tableData = displayedRequests.map(req => [
@@ -240,7 +240,7 @@ export default function OrdersList({ showHistoryOnly = false, showPendingOnly = 
       margin: { top: 40 }
     });
 
-    const fileName = showHistoryOnly ? 'Orders_History' : 'Orders_List';
+    const fileName = showHistoryOnly ? 'Requests_History' : 'Requests_List';
     doc.save(`${fileName}_${new Date().getTime()}.pdf`);
     showToast('Exported Successfully', 'success');
   };
@@ -255,7 +255,7 @@ export default function OrdersList({ showHistoryOnly = false, showPendingOnly = 
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h2 className="text-2xl font-bold text-gray-800 font-[var(--heading)] tracking-tight">
-            {showHistoryOnly ? 'Orders History' : showPendingOnly ? 'Orders List' : 'Orders List'}
+            {showHistoryOnly ? 'Requests History' : showPendingOnly ? 'Requests List' : 'Requests List'}
           </h2>
           <p className="text-sm text-gray-600 mt-1 font-medium">
             {showHistoryOnly
@@ -263,7 +263,7 @@ export default function OrdersList({ showHistoryOnly = false, showPendingOnly = 
               : 'Review and manage material requests from users.'}
           </p>
         </div>
-
+        
         {showHistoryOnly && (
           <div className="flex items-center gap-2">
             <button

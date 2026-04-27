@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BookOpen, Search, FileDown, Trash, Trash2, AlertCircle, AlertTriangle, Check } from 'lucide-react';
+import { BookOpen, Search, FileDown, Trash, Trash2, AlertCircle, AlertTriangle, Check, Clock } from 'lucide-react';
 import { collection, query, orderBy, getDocs, doc, deleteDoc, writeBatch, where } from 'firebase/firestore';
 import { db, auth } from '../lib/firebase';
 import { TableSkeleton } from '../components/SkeletonLoader';
@@ -57,7 +57,7 @@ export default function Logs() {
       // Fetch all logs
       const logsQuery = query(collection(db, 'material_logs'), orderBy('created_at', 'desc'));
       const logsSnapshot = await getDocs(logsQuery);
-      
+
       const data = logsSnapshot.docs.map(docSnap => {
         const logData = docSnap.data();
         return {
@@ -100,7 +100,7 @@ export default function Logs() {
       }
       setRoleLoaded(true);
     };
-    
+
     loadRole();
   }, []);
 
@@ -239,22 +239,19 @@ export default function Logs() {
         </div>
       </div>
 
-      <div className="bg-blue-50 border border-blue-200 text-blue-800 px-4 py-3 rounded-md flex items-start gap-3 mt-4 text-sm">
-        <AlertCircle className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
-        <div>
-          <span className="font-semibold block mb-1">Log Retention Policy (30-Day Allowance)</span>
-          Activity logs are displayed without limits here, but to save space, the system automatically deletes any logs older than 30 days.
-          Please use the Export feature frequently if you need to keep long-term records.
-        </div>
+      <div className="bg-blue-50/50 border border-blue-100 text-blue-600 px-3 py-2 rounded flex items-center gap-2 mt-4 text-xs">
+        <AlertCircle className="w-4 h-4 flex-shrink-0" />
+        <span>
+          <strong className="font-semibold">Retention Policy:</strong> Activity logs are kept for 30 days. Export frequently for long-term records.
+        </span>
       </div>
 
       {expiringLogsCount > 0 && (
-        <div className="bg-orange-50 border border-orange-200 text-orange-800 px-4 py-3 rounded-md flex items-start gap-3 mt-4 text-sm shadow-sm animate-pulse">
-          <AlertTriangle className="w-5 h-5 text-orange-600 mt-0.5 flex-shrink-0" />
-          <div>
-            <span className="font-semibold block mb-1">Expiring Logs Warning</span>
-            {expiringLogsCount} log{expiringLogsCount === 1 ? '' : 's'} {expiringLogsCount === 1 ? 'is' : 'are'} scheduled to be deleted within the next 10 days. Please export to PDF if you need to retain {expiringLogsCount === 1 ? 'this record' : 'these records'}.
-          </div>
+        <div className="bg-orange-50/50 border border-orange-100 text-orange-600 px-3 py-2 rounded flex items-center gap-2 mt-2 text-xs shadow-sm">
+          <AlertTriangle className="w-4 h-4 flex-shrink-0" />
+          <span>
+            <strong className="font-semibold">Expiring Logs:</strong> {expiringLogsCount} log{expiringLogsCount === 1 ? '' : 's'} scheduled for deletion within 30 days.
+          </span>
         </div>
       )}
 
@@ -312,18 +309,18 @@ export default function Logs() {
                     <td className="px-6 py-3">
                       {(() => {
                         const daysLeft = getDaysUntilExpiration(log.created_at);
-                        if (daysLeft > 0 && daysLeft <= 10) {
+                        if (daysLeft <= 10) {
                           return (
                             <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-semibold bg-orange-50 text-orange-700 ring-1 ring-orange-200">
                               <AlertCircle className="w-3 h-3" />
-                              {daysLeft === 1 ? '1 day left' : `${daysLeft} days left`}
+                              {daysLeft === 0 ? 'Expires today' : `${daysLeft} day${daysLeft === 1 ? '' : 's'} left`}
                             </span>
                           );
                         }
                         return (
-                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-semibold bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200">
-                            <Check className="w-3 h-3" />
-                            Active
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-semibold bg-gray-50 text-gray-500 ring-1 ring-gray-200">
+                            <Clock className="w-3 h-3" />
+                            {daysLeft} days left
                           </span>
                         );
                       })()}

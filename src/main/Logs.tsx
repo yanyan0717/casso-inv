@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BookOpen, Search, FileDown, Trash, Trash2, AlertCircle, AlertTriangle, Check, Clock } from 'lucide-react';
+import { BookOpen, Search, FileDown, Trash, Trash2, AlertCircle, AlertTriangle, Clock } from 'lucide-react';
 import { collection, query, orderBy, getDocs, doc, deleteDoc, writeBatch, where } from 'firebase/firestore';
 import { db, auth } from '../lib/firebase';
 import { TableSkeleton } from '../components/SkeletonLoader';
@@ -19,7 +19,6 @@ export default function Logs() {
 
   // Role-based access control
   const [role, setRole] = useState<string | null>(null);
-  const [roleLoaded, setRoleLoaded] = useState(false);
   const isAdmin = role === 'admin' || role === 'administrator';
 
   const getDaysUntilExpiration = (createdAt: string) => {
@@ -98,7 +97,6 @@ export default function Logs() {
           setRole('user');
         }
       }
-      setRoleLoaded(true);
     };
 
     loadRole();

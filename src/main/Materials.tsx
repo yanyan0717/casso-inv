@@ -73,7 +73,6 @@ export default function Materials() {
 
   // Role-based access control
   const [role, setRole] = useState<string | null>(null);
-  const [roleLoaded, setRoleLoaded] = useState(false);
   const isAdmin = role === 'admin' || role === 'administrator';
 
   // Modal State
@@ -174,7 +173,6 @@ export default function Materials() {
           setRole('user');
         }
       }
-      setRoleLoaded(true);
     };
     
     loadRole();
